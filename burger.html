@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FastFood | Mazali taomlar biz bilan!</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Bebas Neue -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Tailwind CSS with Class-based Dark Mode -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Bebas Neue"', 'sans-serif'],
+          },
+          colors: {
+            brandRed: {
+              DEFAULT: '#E63946',
+              dark: '#D62828',
+              light: '#FF4D5A',
+            },
+            brandBlack: {
+              DEFAULT: '#121212',
+              surface: '#1C1C1C',
+              card: '#242424',
+            },
+            brandYellow: {
+              DEFAULT: '#FFB703',
+              bright: '#FCA311',
+            },
+          },
+          animation: {
+            'float': 'float 4.5s ease-in-out infinite',
+            'float-slow': 'float 5.5s ease-in-out 1.2s infinite',
+            'pulse-ring': 'pulseRing 2.5s infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-14px) rotate(1.2deg)' },
+            },
+            pulseRing: {
+              '0%, 100%': { boxShadow: '0 0 0 0 rgba(230, 57, 70, 0.5)' },
+              '50%': { boxShadow: '0 0 0 14px rgba(230, 57, 70, 0)' },
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Immediate Theme Restoration to Prevent Flash -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('fastfood_theme');
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #121212;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E63946;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #FFB703;
+    }
+
+    /* Hero Gradient & Mesh Pattern */
+    .hero-mesh {
+      background:
+        radial-gradient(circle at 82% 30%, rgba(230, 57, 70, 0.25) 0%, transparent 48%),
+        radial-gradient(circle at 15% 80%, rgba(255, 183, 3, 0.16) 0%, transparent 45%);
+    }
+
+    /* Food Card Hover Image Zoom */
+    .product-card:hover .product-img {
+      transform: scale(1.08);
+    }
+
+    /* Toast Slide Animations */
+    .toast-enter {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    .toast-show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-brandBlack dark:bg-brandBlack dark:text-white antialiased transition-colors duration-300 selection:bg-brandRed selection:text-white overflow-x-hidden">
+
+  <!-- ==================== 1. HEADER / NAVBAR ==================== -->
+  <header class="fixed top-0 left-0 right-0 z-40 bg-white/95 dark:bg-brandBlack/95 backdrop-blur-md border-b border-gray-200/80 dark:border-white/10 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 gap-3">
+        
+        <!-- Logo -->
+        <a href="#home" class="flex items-center gap-2.5 shrink-0 group">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-brandRed to-brandRed-dark flex items-center justify-center text-brandYellow shadow-lg shadow-brandRed/30 group-hover:scale-105 transition-transform">
+            <i class="fa-solid fa-burger text-xl"></i>
+          </div>
+          <div>
+            <span class="font-display text-3xl tracking-wider text-brandBlack dark:text-white leading-none block">
+              Fast<span class="text-brandRed">Food</span>
+            </span>
+            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-brandYellow-bright block">Premium Grill</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden xl:flex items-center gap-7">
+          <a href="#home" data-i18n="nav_home" class="text-sm font-bold text-brandBlack dark:text-white hover:text-brandRed dark:hover:text-brandYellow transition-colors">Bosh sahifa</a>
+          <a href="#menu" data-i18n="nav_menu" class="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-brandRed dark:hover:text-brandYellow transition-colors">Menyu</a>
+          <a href="#about" data-i18n="nav_about" class="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-brandRed dark:hover:text-brandYellow transition-colors">Biz haqimizda</a>
+          <a href="#contact" data-i18n="nav_contact" class="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-brandRed dark:hover:text-brandYellow transition-colors">Aloqa</a>
+        </nav>
+
+        <!-- Header Search Bar (Desktop & Tablet) -->
+        <form id="header-search-form" class="hidden md:flex items-center flex-1 max-w-xs lg:max-w-sm mx-2">
+          <div class="relative flex items-center w-full">
+            <input 
+              type="text" 
+              id="header-search-input"
+              data-i18n-placeholder="search_placeholder"
+              placeholder="Taom qidirish..." 
+              class="w-full pl-4 pr-11 py-2.5 rounded-full bg-gray-100 dark:bg-brandBlack-surface border border-gray-200 dark:border-white/10 text-sm text-brandBlack dark:text-white placeholder-gray-400 focus:outline-none focus:border-brandRed transition-colors"
+            />
+            <button 
+              type="submit" 
+              aria-label="Search"
+              class="absolute right-1.5 w-8 h-8 rounded-full bg-brandRed hover:bg-brandRed-dark text-white flex items-center justify-center transition-colors cursor-pointer"
+            >
+              <i class="fa-solid fa-magnifying-glass text-xs"></i>
+            </button>
+          </div>
+        </form>
+
+        <!-- Right Controls: Language Switcher, Dark/Light Mode, Cart, Mobile Toggle -->
+        <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          
+          <!-- Language Selector Dropdown -->
+          <div class="relative" id="lang-dropdown-wrapper">
+            <button 
+              id="lang-toggle-btn" 
+              type="button"
+              aria-label="Select Language"
+              class="flex items-center gap-1.5 px-3 py-2 rounded-full bg-gray-100 dark:bg-brandBlack-surface hover:bg-brandYellow/20 border border-gray-200 dark:border-white/10 text-xs sm:text-sm font-extrabold transition-colors cursor-pointer"
+            >
+              <span id="current-lang-flag">🇺🇿</span>
+              <span id="current-lang-code" class="uppercase">UZ</span>
+              <i class="fa-solid fa-chevron-down text-[10px] opacity-70"></i>
+            </button>
+
+            <div id="lang-menu" class="hidden absolute right-0 mt-2 w-44 rounded-2xl bg-white dark:bg-brandBlack-surface shadow-2xl border border-gray-100 dark:border-white/10 py-1.5 z-50 overflow-hidden">
+              <button type="button" onclick="setLanguage('uz')" class="lang-option w-full px-4 py-2.5 text-left text-sm font-bold flex items-center gap-2.5 hover:bg-brandRed hover:text-white transition-colors cursor-pointer" data-lang="uz">
+                <span>🇺🇿</span> <span>O‘zbek tili</span>
+              </button>
+              <button type="button" onclick="setLanguage('ru')" class="lang-option w-full px-4 py-2.5 text-left text-sm font-bold flex items-center gap-2.5 hover:bg-brandRed hover:text-white transition-colors cursor-pointer" data-lang="ru">
+                <span>🇷🇺</span> <span>Русский язык</span>
+              </button>
+              <button type="button" onclick="setLanguage('en')" class="lang-option w-full px-4 py-2.5 text-left text-sm font-bold flex items-center gap-2.5 hover:bg-brandRed hover:text-white transition-colors cursor-pointer" data-lang="en">
+                <span>🇬🇧</span> <span>English</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Dark Mode / Light Mode Toggle -->
+          <button 
+            id="theme-toggle-btn" 
+            type="button"
+            aria-label="Toggle Dark or Light Mode"
+            class="w-10 h-10 rounded-full bg-gray-100 dark:bg-brandBlack-surface hover:bg-brandYellow hover:text-brandBlack border border-gray-200 dark:border-white/10 flex items-center justify-center text-brandBlack dark:text-brandYellow transition-all cursor-pointer"
+          >
+            <i id="theme-icon" class="fa-solid fa-moon text-base"></i>
+          </button>
+
+          <!-- Shopping Cart Button -->
+          <button 
+            id="open-cart-btn" 
+            type="button"
+            aria-label="Open Cart"
+            class="relative flex items-center gap-2 bg-brandBlack dark:bg-brandRed hover:bg-brandRed dark:hover:bg-brandRed-dark text-white px-3.5 sm:px-4 py-2.5 rounded-full font-bold text-sm shadow-md transition-all cursor-pointer"
+          >
+            <i class="fa-solid fa-cart-shopping text-brandYellow dark:text-white"></i>
+            <span data-i18n="cart_btn" class="hidden sm:inline">Savat</span>
+            <span id="cart-badge" class="inline-flex items-center justify-center min-w-[20px] h-[20px] px-1.5 text-xs font-extrabold bg-brandYellow text-brandBlack rounded-full">
+              0
+            </span>
+          </button>
+
+          <!-- Mobile Menu Toggle -->
+          <button 
+            id="mobile-menu-btn" 
+            type="button"
+            aria-label="Toggle Mobile Menu"
+            class="xl:hidden w-10 h-10 rounded-xl bg-gray-100 dark:bg-brandBlack-surface border border-gray-200 dark:border-white/10 flex items-center justify-center text-brandBlack dark:text-white hover:bg-brandRed hover:text-white transition-colors cursor-pointer"
+          >
+            <i id="mobile-menu-icon" class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation & Mobile Search -->
+    <div id="mobile-menu" class="hidden xl:hidden bg-white dark:bg-brandBlack-surface border-t border-gray-200 dark:border-white/10 px-4 pt-3 pb-6 space-y-3 shadow-2xl">
+      <!-- Mobile Search Bar -->
+      <form id="mobile-search-form" class="md:hidden relative flex items-center">
+        <input 
+          type="text" 
+          id="mobile-search-input"
+          data-i18n-placeholder="search_placeholder"
+          placeholder="Taom qidirish..." 
+          class="w-full pl-4 pr-11 py-3 rounded-full bg-gray-100 dark:bg-brandBlack border border-gray-200 dark:border-white/10 text-sm focus:outline-none focus:border-brandRed"
+        />
+        <button type="submit" class="absolute right-1.5 w-9 h-9 rounded-full bg-brandRed text-white flex items-center justify-center">
+          <i class="fa-solid fa-magnifying-glass text-xs"></i>
+        </button>
+      </form>
+
+      <nav class="space-y-1">
+        <a href="#home" data-i18n="nav_home" class="mobile-link block px-4 py-3 rounded-xl font-bold hover:bg-brandRed/10 hover:text-brandRed transition-colors">Bosh sahifa</a>
+        <a href="#menu" data-i18n="nav_menu" class="mobile-link block px-4 py-3 rounded-xl font-bold hover:bg-brandRed/10 hover:text-brandRed transition-colors">Menyu</a>
+        <a href="#about" data-i18n="nav_about" class="mobile-link block px-4 py-3 rounded-xl font-bold hover:bg-brandRed/10 hover:text-brandRed transition-colors">Biz haqimizda</a>
+        <a href="#contact" data-i18n="nav_contact" class="mobile-link block px-4 py-3 rounded-xl font-bold hover:bg-brandRed/10 hover:text-brandRed transition-colors">Aloqa</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==================== 2. HERO BANNER SECTION ==================== -->
+  <section id="home" class="hero-mesh relative pt-28 pb-20 lg:pt-36 lg:pb-28 bg-gray-50 dark:bg-brandBlack overflow-hidden transition-colors duration-300">
+    <!-- Decorative Glowing Orbs -->
+    <div class="absolute -top-20 -right-20 w-96 h-96 bg-brandRed/15 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-10 w-80 h-80 bg-brandYellow/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Text & CTA -->
+        <div class="lg:col-span-6 text-center lg:text-left space-y-6">
+          <div class="inline-flex items-center gap-2 bg-brandRed/10 dark:bg-white/10 border border-brandRed/20 dark:border-white/15 px-4 py-1.5 rounded-full text-brandRed dark:text-brandYellow text-xs sm:text-sm font-extrabold uppercase tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-brandRed animate-ping"></span>
+            <span data-i18n="hero_badge">100% Halol • Tezkor Yetkazib Berish</span>
+          </div>
+
+          <h1 data-i18n="hero_title" class="font-display text-5xl sm:text-7xl lg:text-[5.25rem] text-brandBlack dark:text-white leading-[0.95] tracking-wide">
+            Mazali taomlar biz bilan!
+          </h1>
+
+          <p data-i18n="hero_subtitle" class="text-base sm:text-xl text-gray-600 dark:text-gray-300 font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            Yangi uzilgan sabzavotlar, shirador mol go‘shtidan tayyorlangan burgerlar, issiq pizzalar va qarsildoq kartoshka fri — 30 daqiqada eshigingizda!
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+            <a 
+              href="#menu" 
+              class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-brandRed hover:bg-brandRed-dark text-white font-extrabold text-base px-8 py-4 rounded-full shadow-xl shadow-brandRed/30 hover:-translate-y-1 transition-all duration-300 animate-pulse-ring"
+            >
+              <span data-i18n="hero_cta">Buyurtma berish</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a 
+              href="#about" 
+              class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-white dark:bg-brandBlack-surface hover:bg-brandYellow hover:text-brandBlack text-brandBlack dark:text-white border border-gray-200 dark:border-white/15 font-bold text-base px-7 py-4 rounded-full shadow-sm transition-all duration-300"
+            >
+              <i class="fa-solid fa-fire text-brandRed"></i>
+              <span data-i18n="hero_secondary_cta">Biz haqimizda</span>
+            </a>
+          </div>
+
+          <!-- Stats Row -->
+          <div class="grid grid-cols-3 gap-4 pt-6 border-t border-gray-200 dark:border-white/10 max-w-md mx-auto lg:mx-0">
+            <div>
+              <p class="font-display text-3xl text-brandRed">30 MIN</p>
+              <p data-i18n="stat_delivery" class="text-xs text-gray-500 dark:text-gray-400 font-semibold">Tezkor yetkazish</p>
+            </div>
+            <div>
+              <p class="font-display text-3xl text-brandBlack dark:text-brandYellow">4.9 <i class="fa-solid fa-star text-brandYellow text-lg"></i></p>
+              <p data-i18n="stat_reviews" class="text-xs text-gray-500 dark:text-gray-400 font-semibold">15,000+ mijozlar</p>
+            </div>
+            <div>
+              <p class="font-display text-3xl text-brandBlack dark:text-white">100%</p>
+              <p data-i18n="stat_fresh" class="text-xs text-gray-500 dark:text-gray-400 font-semibold">Yangi mahsulot</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Gourmet Burger Image -->
+        <div class="lg:col-span-6 relative flex items-center justify-center">
+          <div class="absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-brandRed via-brandYellow to-brandRed opacity-25 blur-2xl"></div>
+          
+          <div class="relative w-full max-w-lg animate-float">
+            <img 
+              src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=950&q=85" 
+              alt="FastFood Signature Burger"
+              onerror="this.src='https://placehold.co/800x700/121212/FFB703?text=FastFood+Burger'"
+              class="w-full h-[350px] sm:h-[440px] object-cover rounded-[2.25rem] shadow-2xl border-4 border-white dark:border-white/15"
+            />
+
+            <!-- Floating Badge 1 -->
+            <div class="absolute -top-5 -left-2 sm:-left-6 bg-white dark:bg-brandBlack-surface text-brandBlack dark:text-white px-4 py-3 rounded-2xl shadow-xl border-2 border-brandYellow flex items-center gap-3 animate-float-slow">
+              <div class="w-10 h-10 rounded-xl bg-brandRed text-white flex items-center justify-center text-lg">
+                <i class="fa-solid fa-fire-flame-curved"></i>
+              </div>
+              <div>
+                <p data-i18n="badge_hot" class="text-[11px] font-extrabold uppercase text-brandRed tracking-wider">Issiq va Shirador</p>
+                <p data-i18n="badge_beef" class="text-sm font-extrabold">100% Mol Go‘shti</p>
+              </div>
+            </div>
+
+            <!-- Floating Badge 2 -->
+            <div class="absolute -bottom-5 -right-2 sm:-right-6 bg-brandYellow text-brandBlack px-5 py-3.5 rounded-2xl shadow-xl border-2 border-brandBlack">
+              <p data-i18n="badge_hit" class="text-[11px] font-extrabold uppercase tracking-wider">Xit Sotuv</p>
+              <p class="font-display text-3xl leading-none">36 000 <span class="text-base font-sans font-extrabold">so‘m</span></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 3. PRODUCT MENU & INSTANT SEARCH ==================== -->
+  <section id="menu" class="py-20 lg:py-28 bg-white dark:bg-brandBlack-surface/40 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Heading -->
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span data-i18n="menu_eyebrow" class="inline-block bg-brandRed/10 text-brandRed font-extrabold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
+          Bizning Menyu
+        </span>
+        <h2 data-i18n="menu_title" class="font-display text-4xl sm:text-6xl text-brandBlack dark:text-white tracking-wide">
+          ENG MAZALI TAOMLAR
+        </h2>
+        <p data-i18n="menu_subtitle" class="text-gray-600 dark:text-gray-400 mt-2 text-base sm:text-lg">
+          O‘zingizga yoqqan kategoriyani tanlang yoki taom nomini qidiring.
+        </p>
+      </div>
+
+      <!-- Category Filter Tabs + Menu Search Bar -->
+      <div class="bg-gray-50 dark:bg-brandBlack-surface p-4 sm:p-5 rounded-3xl border border-gray-200/80 dark:border-white/10 shadow-sm mb-10 space-y-4">
+        
+        <!-- Categories Row -->
+        <div id="category-tabs" class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
+          <button data-cat="all" class="cat-btn active px-5 py-2.5 rounded-full text-sm font-extrabold transition-all bg-brandRed text-white shadow-md shadow-brandRed/25 cursor-pointer">
+            <span data-i18n="cat_all">🍽️ Hammasi</span>
+          </button>
+          <button data-cat="burgers" class="cat-btn px-5 py-2.5 rounded-full text-sm font-bold transition-all bg-white dark:bg-brandBlack text-brandBlack dark:text-gray-200 hover:bg-brandYellow hover:text-brandBlack border border-gray-200 dark:border-white/10 cursor-pointer">
+            <span data-i18n="cat_burgers">🍔 Burgerlar</span>
+          </button>
+          <button data-cat="pizzas" class="cat-btn px-5 py-2.5 rounded-full text-sm font-bold transition-all bg-white dark:bg-brandBlack text-brandBlack dark:text-gray-200 hover:bg-brandYellow hover:text-brandBlack border border-gray-200 dark:border-white/10 cursor-pointer">
+            <span data-i18n="cat_pizzas">🍕 Pizzalar</span>
+          </button>
+          <button data-cat="lavash" class="cat-btn px-5 py-2.5 rounded-full text-sm font-bold transition-all bg-white dark:bg-brandBlack text-brandBlack dark:text-gray-200 hover:bg-brandYellow hover:text-brandBlack border border-gray-200 dark:border-white/10 cursor-pointer">
+            <span data-i18n="cat_lavash">🌯 Lavashlar</span>
+          </button>
+          <button data-cat="hotdogs" class="cat-btn px-5 py-2.5 rounded-full text-sm font-bold transition-all bg-white dark:bg-brandBlack text-brandBlack dark:text-gray-200 hover:bg-brandYellow hover:text-brandBlack border border-gray-200 dark:border-white/10 cursor-pointer">
+            <span data-i18n="cat_hotdogs">🌭 Hot-doglar</span>
+          </button>
+          <button data-cat="fries" class="cat-btn px-5 py-2.5 rounded-full text-sm font-bold transition-all bg-white dark:bg-brandBlack text-brandBlack dark:text-gray-200 hover:bg-brandYellow hover:text-brandBlack border border-gray-200 dark:border-white/10 cursor-pointer">
+            <span data-i18n="cat_fries">🍟 Kartoshka fri</span>
+          </button>
+          <button data-cat="drinks" class="cat-btn px-5 py-2.5 rounded-full text-sm font-bold transition-all bg-white dark:bg-brandBlack text-brandBlack dark:text-gray-200 hover:bg-brandYellow hover:text-brandBlack border border-gray-200 dark:border-white/10 cursor-pointer">
+            <span data-i18n="cat_drinks">🥤 Ichimliklar</span>
+          </button>
+        </div>
+
+        <!-- Dedicated Menu Search Form -->
+        <form id="menu-search-form" class="max-w-xl mx-auto flex items-center gap-2 pt-1">
+          <div class="relative flex-1">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input 
+              type="text" 
+              id="menu-search-input"
+              data-i18n-placeholder="search_placeholder"
+              placeholder="Taom nomi bo‘yicha qidirish..." 
+              class="w-full pl-11 pr-10 py-3 rounded-full bg-white dark:bg-brandBlack border border-gray-200 dark:border-white/15 text-sm font-medium focus:outline-none focus:border-brandRed transition-colors"
+            />
+            <button 
+              type="button" 
+              id="clear-search-btn" 
+              aria-label="Clear Search"
+              class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brandRed cursor-pointer"
+            >
+              <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+          </div>
+          <button 
+            type="submit" 
+            data-i18n="search_btn"
+            class="px-6 py-3 rounded-full bg-brandRed hover:bg-brandRed-dark text-white font-bold text-sm shadow-md transition-colors shrink-0 cursor-pointer"
+          >
+            Qidirish
+          </button>
+        </form>
+      </div>
+
+      <!-- Product Grid -->
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-7">
+        <!-- Cards rendered dynamically by JavaScript -->
+      </div>
+
+      <!-- Empty State ("Mahsulot topilmadi") -->
+      <div id="no-results-box" class="hidden text-center py-16 px-4 bg-gray-50 dark:bg-brandBlack-surface rounded-3xl border border-dashed border-gray-300 dark:border-white/15">
+        <div class="w-16 h-16 rounded-full bg-brandYellow/20 text-brandYellow-bright flex items-center justify-center mx-auto mb-4 text-2xl">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <h3 data-i18n="not_found_title" class="text-2xl font-extrabold text-brandBlack dark:text-white">Mahsulot topilmadi</h3>
+        <p data-i18n="not_found_desc" class="text-gray-500 dark:text-gray-400 mt-1.5 mb-6 max-w-md mx-auto">
+          Boshqa so‘z bilan qidirib ko‘ring yoki barcha taomlar ro‘yxatiga qayting.
+        </p>
+        <button 
+          type="button" 
+          id="reset-menu-btn"
+          data-i18n="reset_btn"
+          class="px-7 py-3 rounded-full bg-brandRed hover:bg-brandRed-dark text-white font-bold text-sm shadow-lg transition-colors cursor-pointer"
+        >
+          Barcha mahsulotlarni ko‘rsatish
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 4. ABOUT US SECTION ==================== -->
+  <section id="about" class="py-20 lg:py-28 bg-gray-50 dark:bg-brandBlack transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Photo Grid -->
+        <div class="lg:col-span-6 grid grid-cols-2 gap-4 sm:gap-6">
+          <div class="space-y-4 sm:space-y-6">
+            <img 
+              src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=650&q=80" 
+              alt="Juicy Burgers"
+              onerror="this.src='https://placehold.co/600x700/121212/FFB703?text=FastFood+Grill'"
+              class="w-full h-60 sm:h-72 object-cover rounded-3xl shadow-lg"
+            />
+            <div class="bg-brandRed text-white p-6 rounded-3xl shadow-lg">
+              <p class="font-display text-4xl sm:text-5xl text-brandYellow">10+ YIL</p>
+              <p data-i18n="about_exp" class="text-sm font-semibold mt-1">Toshkent bo‘ylab eng mazali fast-food tajribasi</p>
+            </div>
+          </div>
+          <div class="space-y-4 sm:space-y-6 pt-8">
+            <div class="bg-brandBlack dark:bg-brandBlack-surface text-white p-6 rounded-3xl shadow-lg border border-white/10">
+              <div class="flex items-center gap-1 text-brandYellow mb-2">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              </div>
+              <p data-i18n="about_quote" class="text-sm font-semibold text-gray-200">
+                "Eng mazali lavash va qarsildoq fri! Har doim issiq holda yetib keladi."
+              </p>
+            </div>
+            <img 
+              src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=650&q=80" 
+              alt="Fresh Pepperoni Pizza"
+              onerror="this.src='https://placehold.co/600x700/E63946/FFFFFF?text=Fresh+Pizza'"
+              class="w-full h-60 sm:h-72 object-cover rounded-3xl shadow-lg"
+            />
+          </div>
+        </div>
+
+        <!-- Right Text & Features -->
+        <div class="lg:col-span-6 space-y-6">
+          <span data-i18n="about_eyebrow" class="inline-block bg-brandYellow/25 text-brandBlack dark:text-brandYellow font-extrabold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full">
+            Biz Haqimizda
+          </span>
+          <h2 data-i18n="about_title" class="font-display text-4xl sm:text-6xl text-brandBlack dark:text-white tracking-wide leading-none">
+            SIFAT VA TA’M UYG‘UNLIGI
+          </h2>
+          <p data-i18n="about_desc" class="text-gray-600 dark:text-gray-300 text-base sm:text-lg leading-relaxed">
+            FastFood restoranida har bir taom buyurtma tushgan zahoti yangi masalliqlardan tayyorlanadi. Biz faqat 100% halol go‘sht, tabiiy pishloq va maxsus mualliflik souslaridan foydalanamiz.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div class="p-5 rounded-2xl bg-white dark:bg-brandBlack-surface border border-gray-100 dark:border-white/10 shadow-xs">
+              <div class="w-11 h-11 rounded-xl bg-brandRed/10 text-brandRed flex items-center justify-center text-xl mb-3">
+                <i class="fa-solid fa-leaf"></i>
+              </div>
+              <h4 data-i18n="feat_1_title" class="font-extrabold text-base">Yangi Mahsulotlar</h4>
+              <p data-i18n="feat_1_desc" class="text-xs text-gray-500 dark:text-gray-400 mt-1">Har kuni tongda keltiriladigan sarxil sabzavotlar va yumshoq nonlar.</p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-white dark:bg-brandBlack-surface border border-gray-100 dark:border-white/10 shadow-xs">
+              <div class="w-11 h-11 rounded-xl bg-brandYellow/20 text-brandYellow-bright flex items-center justify-center text-xl mb-3">
+                <i class="fa-solid fa-motorcycle"></i>
+              </div>
+              <h4 data-i18n="feat_2_title" class="font-extrabold text-base">Tezkor Kuryerlar</h4>
+              <p data-i18n="feat_2_desc" class="text-xs text-gray-500 dark:text-gray-400 mt-1">Maxsus termokonteinerlarda taomlaringiz issiqligini yo‘qotmaydi.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 5. CONTACT SECTION ==================== -->
+  <section id="contact" class="py-20 lg:py-24 bg-white dark:bg-brandBlack-surface/40 border-t border-gray-200/70 dark:border-white/10 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span data-i18n="contact_eyebrow" class="inline-block bg-brandRed/10 text-brandRed font-extrabold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
+          Bog‘lanish
+        </span>
+        <h2 data-i18n="contact_title" class="font-display text-4xl sm:text-6xl text-brandBlack dark:text-white tracking-wide">
+          BIZ BILAN ALOQA
+        </h2>
+        <p data-i18n="contact_subtitle" class="text-gray-600 dark:text-gray-400 mt-2 text-base">
+          Savollaringiz yoki takliflaringiz bormi? Bizga xabar qoldiring!
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Info Card -->
+        <div class="lg:col-span-5 bg-brandBlack text-white rounded-3xl p-8 sm:p-10 flex flex-col justify-between shadow-xl border border-white/10">
+          <div class="space-y-6">
+            <div>
+              <h3 data-i18n="contact_card_title" class="font-display text-3xl text-brandYellow tracking-wide">ASOSIY FILIALIMIZ</h3>
+              <p data-i18n="contact_card_sub" class="text-gray-400 text-sm mt-1">Har kuni dam olish kunlarisiz xizmatdamiz.</p>
+            </div>
+
+            <div class="space-y-5 pt-2">
+              <div class="flex items-start gap-4">
+                <div class="w-11 h-11 rounded-xl bg-brandRed flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div>
+                  <p data-i18n="contact_addr_label" class="font-bold">Manzil</p>
+                  <p data-i18n="contact_addr_val" class="text-sm text-gray-300 mt-0.5">Toshkent sh., Amir Temur shoh ko‘chasi, 45-uy</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div class="w-11 h-11 rounded-xl bg-brandYellow text-brandBlack flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-phone"></i>
+                </div>
+                <div>
+                  <p data-i18n="contact_phone_label" class="font-bold">Telefon raqam</p>
+                  <p class="text-sm text-gray-300 mt-0.5">+998 (71) 200-55-55</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div class="w-11 h-11 rounded-xl bg-white/10 text-brandYellow flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-clock"></i>
+                </div>
+                <div>
+                  <p data-i18n="contact_hours_label" class="font-bold">Ish vaqti</p>
+                  <p data-i18n="contact_hours_val" class="text-sm text-gray-300 mt-0.5">Har kuni: 09:00 – 02:00</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-8 mt-8 border-t border-white/10 flex items-center gap-3">
+            <a href="#contact" aria-label="Telegram" class="w-10 h-10 rounded-full bg-white/10 hover:bg-brandRed flex items-center justify-center transition-colors">
+              <i class="fa-brands fa-telegram"></i>
+            </a>
+            <a href="#contact" aria-label="Instagram" class="w-10 h-10 rounded-full bg-white/10 hover:bg-brandRed flex items-center justify-center transition-colors">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="#contact" aria-label="Facebook" class="w-10 h-10 rounded-full bg-white/10 hover:bg-brandRed flex items-center justify-center transition-colors">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="lg:col-span-7 bg-gray-50 dark:bg-brandBlack-surface rounded-3xl p-8 sm:p-10 shadow-lg border border-gray-200/80 dark:border-white/10">
+          <form id="contact-form" class="space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label data-i18n="form_name" class="block text-xs font-extrabold uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-2">Ismingiz *</label>
+                <input type="text" required class="w-full px-4 py-3.5 rounded-xl bg-white dark:bg-brandBlack border border-gray-200 dark:border-white/10 text-sm focus:outline-none focus:border-brandRed" />
+              </div>
+              <div>
+                <label data-i18n="form_phone" class="block text-xs font-extrabold uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-2">Telefon raqamingiz *</label>
+                <input type="tel" required placeholder="+998 90 123 45 67" class="w-full px-4 py-3.5 rounded-xl bg-white dark:bg-brandBlack border border-gray-200 dark:border-white/10 text-sm focus:outline-none focus:border-brandRed" />
+              </div>
+            </div>
+
+            <div>
+              <label data-i18n="form_message" class="block text-xs font-extrabold uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-2">Xabaringiz *</label>
+              <textarea rows="4" required class="w-full px-4 py-3.5 rounded-xl bg-white dark:bg-brandBlack border border-gray-200 dark:border-white/10 text-sm focus:outline-none focus:border-brandRed resize-none"></textarea>
+            </div>
+
+            <button 
+              type="submit" 
+              class="w-full sm:w-auto bg-brandRed hover:bg-brandRed-dark text-white font-extrabold px-8 py-4 rounded-full shadow-lg shadow-brandRed/25 transition-all flex items-center justify-center gap-2.5 cursor-pointer"
+            >
+              <span data-i18n="form_submit">Xabar yuborish</span>
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+
+            <div id="contact-success-msg" class="hidden p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-sm font-bold flex items-center gap-3">
+              <i class="fa-solid fa-circle-check text-lg"></i>
+              <span data-i18n="form_sent">Xabaringiz muvaffaqiyatli yuborildi! Tez orada bog‘lanamiz.</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 6. FOOTER ==================== -->
+  <footer class="bg-brandBlack text-white py-12 border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <a href="#home" class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-xl bg-brandRed flex items-center justify-center text-brandYellow">
+          <i class="fa-solid fa-burger text-lg"></i>
+        </div>
+        <span class="font-display text-3xl tracking-wider">Fast<span class="text-brandRed">Food</span></span>
+      </a>
+
+      <div class="flex flex-wrap items-center justify-center gap-6 text-sm font-semibold text-gray-400">
+        <a href="#home" data-i18n="nav_home" class="hover:text-brandYellow transition-colors">Bosh sahifa</a>
+        <a href="#menu" data-i18n="nav_menu" class="hover:text-brandYellow transition-colors">Menyu</a>
+        <a href="#about" data-i18n="nav_about" class="hover:text-brandYellow transition-colors">Biz haqimizda</a>
+        <a href="#contact" data-i18n="nav_contact" class="hover:text-brandYellow transition-colors">Aloqa</a>
+      </div>
+
+      <p class="text-xs text-gray-500">
+        &copy; <span id="footer-year"></span> FastFood. <span data-i18n="footer_rights">Barcha huquqlar himoyalangan.</span>
+      </p>
+    </div>
+  </footer>
+
+  <!-- ==================== 7. SLIDE-OVER SHOPPING CART ==================== -->
+  <div id="cart-backdrop" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 hidden transition-opacity"></div>
+
+  <aside 
+    id="cart-drawer" 
+    aria-label="Shopping Cart"
+    class="fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-brandBlack-surface text-brandBlack dark:text-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col"
+  >
+    <!-- Header -->
+    <div class="bg-brandBlack text-white px-6 py-5 flex items-center justify-between border-b border-white/10">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-brandRed flex items-center justify-center text-brandYellow">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </div>
+        <div>
+          <h3 data-i18n="cart_title" class="font-display text-2xl tracking-wide leading-none">SAVATCHA</h3>
+          <p id="cart-count-label" class="text-xs text-gray-400 mt-0.5">0 ta mahsulot</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button 
+          id="clear-cart-btn" 
+          type="button"
+          data-i18n="cart_clear"
+          class="text-xs font-bold text-gray-400 hover:text-brandRed px-2.5 py-1.5 rounded-lg bg-white/5 transition-colors cursor-pointer"
+        >
+          Tozalash
+        </button>
+        <button id="close-cart-btn" type="button" aria-label="Close Cart" class="w-9 h-9 rounded-full bg-white/10 hover:bg-brandRed text-white flex items-center justify-center transition-colors cursor-pointer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Items Container -->
+    <div id="cart-items-list" class="flex-1 overflow-y-auto p-6 space-y-4">
+      <!-- Rendered dynamically -->
+    </div>
+
+    <!-- Footer Totals & Order Button -->
+    <div class="border-t border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-brandBlack p-6 space-y-4">
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between text-gray-600 dark:text-gray-400">
+          <span data-i18n="cart_subtotal">Taomlar narxi:</span>
+          <span id="cart-subtotal" class="font-bold text-brandBlack dark:text-white">0 so‘m</span>
+        </div>
+        <div class="flex justify-between text-gray-600 dark:text-gray-400">
+          <span data-i18n="cart_delivery">Yetkazib berish:</span>
+          <span id="cart-delivery" class="font-bold text-emerald-600">0 so‘m</span>
+        </div>
+        <div class="flex justify-between text-base font-extrabold pt-2 border-t border-gray-200 dark:border-white/10">
+          <span data-i18n="cart_total">Jami summa:</span>
+          <span id="cart-total" class="text-xl text-brandRed">0 so‘m</span>
+        </div>
+      </div>
+
+      <button 
+        id="checkout-open-btn" 
+        type="button"
+        disabled
+        class="w-full bg-brandRed hover:bg-brandRed-dark disabled:bg-gray-300 dark:disabled:bg-white/10 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-extrabold py-4 rounded-full shadow-lg shadow-brandRed/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
+      >
+        <span data-i18n="cart_checkout">Buyurtmani rasmiylashtirish</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================== 8. CHECKOUT MODAL ==================== -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/75 backdrop-blur-xs">
+    <div class="bg-white dark:bg-brandBlack-surface text-brandBlack dark:text-white rounded-3xl max-w-md w-full p-7 sm:p-8 shadow-2xl border border-gray-100 dark:border-white/10 relative">
+      <button id="close-modal-btn" type="button" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-brandRed hover:text-white flex items-center justify-center transition-colors cursor-pointer">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div id="checkout-form-step">
+        <h3 data-i18n="modal_title" class="font-display text-3xl tracking-wide mb-1">BUYURTMANI TASDIQLASH</h3>
+        <p data-i18n="modal_sub" class="text-xs text-gray-500 dark:text-gray-400 mb-5">Ma’lumotlaringizni kiriting, kuryerimiz 30 daqiqada yetkazadi.</p>
+
+        <form id="checkout-form" class="space-y-4">
+          <div>
+            <label data-i18n="form_name" class="block text-xs font-extrabold uppercase mb-1.5">Ismingiz *</label>
+            <input type="text" id="cust-name" required class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-brandBlack border border-gray-200 dark:border-white/10 text-sm focus:outline-none focus:border-brandRed" />
+          </div>
+          <div>
+            <label data-i18n="form_phone" class="block text-xs font-extrabold uppercase mb-1.5">Telefon raqamingiz *</label>
+            <input type="tel" id="cust-phone" required placeholder="+998 90 123 45 67" class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-brandBlack border border-gray-200 dark:border-white/10 text-sm focus:outline-none focus:border-brandRed" />
+          </div>
+          <div>
+            <label data-i18n="modal_address" class="block text-xs font-extrabold uppercase mb-1.5">Yetkazib berish manzili *</label>
+            <input type="text" id="cust-address" required class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-brandBlack border border-gray-200 dark:border-white/10 text-sm focus:outline-none focus:border-brandRed" />
+          </div>
+
+          <div class="bg-brandYellow/20 rounded-2xl p-4 flex items-center justify-between">
+            <span data-i18n="cart_total" class="text-sm font-bold">Jami summa:</span>
+            <span id="modal-total-text" class="font-display text-3xl text-brandRed">0 so‘m</span>
+          </div>
+
+          <button type="submit" data-i18n="modal_confirm_btn" class="w-full bg-brandRed hover:bg-brandRed-dark text-white font-extrabold py-4 rounded-full shadow-lg transition-all cursor-pointer">
+            Buyurtma berish
+          </button>
+        </form>
+      </div>
+
+      <div id="checkout-done-step" class="hidden text-center py-6 space-y-4">
+        <div class="w-20 h-20 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center mx-auto text-4xl">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h3 data-i18n="order_success_title" class="font-display text-4xl">BUYURTMA QABUL QILINDI!</h3>
+        <p data-i18n="order_success_desc" class="text-sm text-gray-500 dark:text-gray-300">
+          Rahmat! Oshpazlarimiz taomingizni tayyorlashni boshladi. Tez orada operatorimiz bog‘lanadi.
+        </p>
+        <button id="finish-order-btn" type="button" data-i18n="order_done_btn" class="w-full bg-brandBlack dark:bg-brandRed text-white font-extrabold py-3.5 rounded-full cursor-pointer">
+          Yopish
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-box" class="fixed bottom-6 right-6 z-50 pointer-events-none flex flex-col gap-2"></div>
+
+  <!-- ==================== VANILLA JAVASCRIPT ==================== -->
+  <script>
+    /**
+     * 1. MULTI-LANGUAGE DICTIONARY (UZ / RU / EN)
+     */
+    const TRANSLATIONS = {
+      uz: {
+        flag: '🇺🇿',
+        code: 'UZ',
+        nav_home: 'Bosh sahifa',
+        nav_menu: 'Menyu',
+        nav_about: 'Biz haqimizda',
+        nav_contact: 'Aloqa',
+        search_placeholder: 'Taom qidirish...',
+        search_btn: 'Qidirish',
+        cart_btn: 'Savat',
+        hero_badge: '100% Halol • Tezkor Yetkazib Berish',
+        hero_title: 'Mazali taomlar biz bilan!',
+        hero_subtitle: 'Yangi uzilgan sabzavotlar, shirador mol go‘shtidan tayyorlangan burgerlar, issiq pizzalar va qarsildoq kartoshka fri — 30 daqiqada eshigingizda!',
+        hero_cta: 'Buyurtma berish',
+        hero_secondary_cta: 'Biz haqimizda',
+        stat_delivery: 'Tezkor yetkazish',
+        stat_reviews: '15,000+ mijozlar',
+        stat_fresh: 'Yangi mahsulot',
+        badge_hot: 'Issiq va Shirador',
+        badge_beef: '100% Mol Go‘shti',
+        badge_hit: 'Xit Sotuv',
+        menu_eyebrow: 'Bizning Menyu',
+        menu_title: 'ENG MAZALI TAOMLAR',
+        menu_subtitle: 'O‘zingizga yoqqan kategoriyani tanlang yoki taom nomini qidiring.',
+        cat_all: '🍽️ Hammasi',
+        cat_burgers: '🍔 Burgerlar',
+        cat_pizzas: '🍕 Pizzalar',
+        cat_lavash: '🌯 Lavashlar',
+        cat_hotdogs: '🌭 Hot-doglar',
+        cat_fries: '🍟 Kartoshka fri',
+        cat_drinks: '🥤 Ichimliklar',
+        add_to_cart: 'Savatga qo‘shish',
+        not_found_title: 'Mahsulot topilmadi',
+        not_found_desc: 'Boshqa so‘z bilan qidirib ko‘ring yoki barcha taomlar ro‘yxatiga qayting.',
+        reset_btn: 'Barcha mahsulotlarni ko‘rsatish',
+        about_eyebrow: 'Biz Haqimizda',
+        about_title: 'SIFAT VA TA’M UYG‘UNLIGI',
+        about_desc: 'FastFood restoranida har bir taom buyurtma tushgan zahoti yangi masalliqlardan tayyorlanadi. Biz faqat 100% halol go‘sht, tabiiy pishloq va maxsus mualliflik souslaridan foydalanamiz.',
+        about_exp: 'Toshkent bo‘ylab eng mazali fast-food tajribasi',
+        about_quote: '"Eng mazali lavash va qarsildoq fri! Har doim issiq holda yetib keladi."',
+        feat_1_title: 'Yangi Mahsulotlar',
+        feat_1_desc: 'Har kuni tongda keltiriladigan sarxil sabzavotlar va yumshoq nonlar.',
+        feat_2_title: 'Tezkor Kuryerlar',
+        feat_2_desc: 'Maxsus termokonteinerlarda taomlaringiz issiqligini yo‘qotmaydi.',
+        contact_eyebrow: 'Bog‘lanish',
+        contact_title: 'BIZ BILAN ALOQA',
+        contact_subtitle: 'Savollaringiz yoki takliflaringiz bormi? Bizga xabar qoldiring!',
+        contact_card_title: 'ASOSIY FILIALIMIZ',
+        contact_card_sub: 'Har kuni dam olish kunlarisiz xizmatdamiz.',
+        contact_addr_label: 'Manzil',
+        contact_addr_val: 'Toshkent sh., Amir Temur shoh ko‘chasi, 45-uy',
+        contact_phone_label: 'Telefon raqam',
+        contact_hours_label: 'Ish vaqti',
+        contact_hours_val: 'Har kuni: 09:00 – 02:00',
+        form_name: 'Ismingiz *',
+        form_phone: 'Telefon raqamingiz *',
+        form_message: 'Xabaringiz *',
+        form_submit: 'Xabar yuborish',
+        form_sent: 'Xabaringiz muvaffaqiyatli yuborildi! Tez orada bog‘lanamiz.',
+        footer_rights: 'Barcha huquqlar himoyalangan.',
+        cart_title: 'SAVATCHA',
+        cart_clear: 'Tozalash',
+        cart_empty_title: 'Savatchangiz bo‘sh',
+        cart_empty_desc: 'Mazali burger, pizza yoki lavashlardan tanlab savatga qo‘shing!',
+        cart_subtotal: 'Taomlar narxi:',
+        cart_delivery: 'Yetkazib berish:',
+        cart_free: 'Bepul (100 000+ so‘m)',
+        cart_total: 'Jami summa:',
+        cart_checkout: 'Buyurtmani rasmiylashtirish',
+        items_suffix: 'ta mahsulot',
+        currency: 'so‘m',
+        added_toast: 'savatga qo‘shildi!',
+        modal_title: 'BUYURTMANI TASDIQLASH',
+        modal_sub: 'Ma’lumotlaringizni kiriting, kuryerimiz 30 daqiqada yetkazadi.',
+        modal_address: 'Yetkazib berish manzili *',
+        modal_confirm_btn: 'Buyurtma berish',
+        order_success_title: 'BUYURTMA QABUL QILINDI!',
+        order_success_desc: 'Rahmat! Oshpazlarimiz taomingizni tayyorlashni boshladi. Tez orada operatorimiz bog‘lanadi.',
+        order_done_btn: 'Yopish'
+      },
+      ru: {
+        flag: '🇷🇺',
+        code: 'RU',
+        nav_home: 'Главная',
+        nav_menu: 'Меню',
+        nav_about: 'О нас',
+        nav_contact: 'Контакты',
+        search_placeholder: 'Поиск блюд...',
+        search_btn: 'Найти',
+        cart_btn: 'Корзина',
+        hero_badge: '100% Халяль • Быстрая доставка',
+        hero_title: 'Вкусная еда вместе с нами!',
+        hero_subtitle: 'Свежие овощи, сочные бургеры из отборной говядины, горячая пицца и хрустящий картофель фри — у вашей двери за 30 минут!',
+        hero_cta: 'Заказать сейчас',
+        hero_secondary_cta: 'О ресторане',
+        stat_delivery: 'Быстрая доставка',
+        stat_reviews: '15,000+ клиентов',
+        stat_fresh: 'Свежие продукты',
+        badge_hot: 'Горячий и Сочный',
+        badge_beef: '100% Говядина',
+        badge_hit: 'Хит Продаж',
+        menu_eyebrow: 'Наше Меню',
+        menu_title: 'САМЫЕ ВКУСНЫЕ БЛЮДА',
+        menu_subtitle: 'Выберите любимую категорию или найдите блюдо по названию.',
+        cat_all: '🍽️ Все',
+        cat_burgers: '🍔 Бургеры',
+        cat_pizzas: '🍕 Пицца',
+        cat_lavash: '🌯 Лаваш',
+        cat_hotdogs: '🌭 Хот-доги',
+        cat_fries: '🍟 Картофель фри',
+        cat_drinks: '🥤 Напитки',
+        add_to_cart: 'В корзину',
+        not_found_title: 'Продукт не найден',
+        not_found_desc: 'Попробуйте другой запрос или вернитесь ко всему списку блюд.',
+        reset_btn: 'Показать все блюда',
+        about_eyebrow: 'О Нас',
+        about_title: 'ГАРМОНИЯ КАЧЕСТВА И ВКУСА',
+        about_desc: 'В ресторане FastFood каждое блюдо готовится из свежих ингредиентов сразу после заказа. Мы используем только 100% халяльное мясо, натуральный сыр и фирменные соусы.',
+        about_exp: 'Лучший опыт фаст-фуда по всему Ташкенту',
+        about_quote: '"Самый вкусный лаваш и хрустящая картошка фри! Всегда приезжает горячим."',
+        feat_1_title: 'Свежие продукты',
+        feat_1_desc: 'Ежедневная утренняя поставка свежих овощей и мягких булочек.',
+        feat_2_title: 'Быстрые курьеры',
+        feat_2_desc: 'Специальные термосумки сохраняют ваши блюда горячими.',
+        contact_eyebrow: 'Связаться',
+        contact_title: 'НАШИ КОНТАКТЫ',
+        contact_subtitle: 'Есть вопросы или предложения? Напишите нам!',
+        contact_card_title: 'ГЛАВНЫЙ ФИЛИАЛ',
+        contact_card_sub: 'Работаем ежедневно без выходных.',
+        contact_addr_label: 'Адрес',
+        contact_addr_val: 'г. Ташкент, проспект Амира Темура, 45',
+        contact_phone_label: 'Телефон',
+        contact_hours_label: 'Режим работы',
+        contact_hours_val: 'Ежедневно: 09:00 – 02:00',
+        form_name: 'Ваше имя *',
+        form_phone: 'Номер телефона *',
+        form_message: 'Сообщение *',
+        form_submit: 'Отправить',
+        form_sent: 'Ваше сообщение успешно отправлено! Мы скоро свяжемся с вами.',
+        footer_rights: 'Все права защищены.',
+        cart_title: 'КОРЗИНА',
+        cart_clear: 'Очистить',
+        cart_empty_title: 'Ваша корзина пуста',
+        cart_empty_desc: 'Добавьте сочные бургеры, пиццу или лаваш из нашего меню!',
+        cart_subtotal: 'Сумма блюд:',
+        cart_delivery: 'Доставка:',
+        cart_free: 'Бесплатно (от 100 000 сум)',
+        cart_total: 'Итого:',
+        cart_checkout: 'Оформить заказ',
+        items_suffix: 'товаров',
+        currency: 'сум',
+        added_toast: 'добавлено в корзину!',
+        modal_title: 'ПОДТВЕРЖДЕНИЕ ЗАКАЗА',
+        modal_sub: 'Введите ваши данные, курьер доставит заказ за 30 минут.',
+        modal_address: 'Адрес доставки *',
+        modal_confirm_btn: 'Подтвердить заказ',
+        order_success_title: 'ЗАКАЗ ПРИНЯТ!',
+        order_success_desc: 'Спасибо! Наши повара уже начали готовить ваш заказ. Оператор скоро свяжется с вами.',
+        order_done_btn: 'Закрыть'
+      },
+      en: {
+        flag: '🇬🇧',
+        code: 'EN',
+        nav_home: 'Home',
+        nav_menu: 'Menu',
+        nav_about: 'About Us',
+        nav_contact: 'Contact',
+        search_placeholder: 'Search dishes...',
+        search_btn: 'Search',
+        cart_btn: 'Cart',
+        hero_badge: '100% Halal • Express Delivery',
+        hero_title: 'Delicious food with us!',
+        hero_subtitle: 'Crisp farm vegetables, juicy 100% beef burgers, stone-baked pizzas, and golden french fries — at your door in 30 minutes!',
+        hero_cta: 'Order Now',
+        hero_secondary_cta: 'About Us',
+        stat_delivery: 'Fast Delivery',
+        stat_reviews: '15,000+ Customers',
+        stat_fresh: 'Fresh Ingredients',
+        badge_hot: 'Hot & Juicy',
+        badge_beef: '100% Prime Beef',
+        badge_hit: 'Best Seller',
+        menu_eyebrow: 'Our Menu',
+        menu_title: 'MOST DELICIOUS DISHES',
+        menu_subtitle: 'Choose your favorite category or search by dish name.',
+        cat_all: '🍽️ All',
+        cat_burgers: '🍔 Burgers',
+        cat_pizzas: '🍕 Pizzas',
+        cat_lavash: '🌯 Lavash',
+        cat_hotdogs: '🌭 Hot-dogs',
+        cat_fries: '🍟 French Fries',
+        cat_drinks: '🥤 Drinks',
+        add_to_cart: 'Add to Cart',
+        not_found_title: 'Product not found',
+        not_found_desc: 'Try searching with another keyword or return to the full menu list.',
+        reset_btn: 'Show all products',
+        about_eyebrow: 'About Us',
+        about_title: 'HARMONY OF QUALITY & TASTE',
+        about_desc: 'At FastFood, every dish is prepared fresh to order. We use only 100% halal meat, real melted cheese, and signature house sauces.',
+        about_exp: 'The tastiest fast-food experience across Tashkent',
+        about_quote: '"Best lavash wrap and crispy fries! Always arrives piping hot."',
+        feat_1_title: 'Fresh Ingredients',
+        feat_1_desc: 'Daily morning delivery of crisp vegetables and soft bakery buns.',
+        feat_2_title: 'Fast Couriers',
+        feat_2_desc: 'Insulated thermal bags keep your food hot and crispy.',
+        contact_eyebrow: 'Get in Touch',
+        contact_title: 'CONTACT US',
+        contact_subtitle: 'Have questions or feedback? Send us a message!',
+        contact_card_title: 'MAIN BRANCH',
+        contact_card_sub: 'Open every day without days off.',
+        contact_addr_label: 'Address',
+        contact_addr_val: '45 Amir Temur Avenue, Tashkent',
+        contact_phone_label: 'Phone Number',
+        contact_hours_label: 'Working Hours',
+        contact_hours_val: 'Daily: 09:00 – 02:00',
+        form_name: 'Your Name *',
+        form_phone: 'Phone Number *',
+        form_message: 'Your Message *',
+        form_submit: 'Send Message',
+        form_sent: 'Your message has been sent successfully! We will contact you shortly.',
+        footer_rights: 'All rights reserved.',
+        cart_title: 'YOUR CART',
+        cart_clear: 'Clear',
+        cart_empty_title: 'Your cart is empty',
+        cart_empty_desc: 'Add juicy burgers, pizzas, or lavash wraps from our menu!',
+        cart_subtotal: 'Subtotal:',
+        cart_delivery: 'Delivery:',
+        cart_free: 'Free (100,000+ so‘m)',
+        cart_total: 'Total:',
+        cart_checkout: 'Proceed to Checkout',
+        items_suffix: 'items',
+        currency: 'so‘m',
+        added_toast: 'added to cart!',
+        modal_title: 'CONFIRM YOUR ORDER',
+        modal_sub: 'Enter your details and our courier will deliver in 30 minutes.',
+        modal_address: 'Delivery Address *',
+        modal_confirm_btn: 'Place Order',
+        order_success_title: 'ORDER CONFIRMED!',
+        order_success_desc: 'Thank you! Our chefs have started preparing your meal. Our operator will call shortly.',
+        order_done_btn: 'Close'
+      }
+    };
+
+    /**
+     * 2. PRODUCT CATALOG (ALL 6 CATEGORIES, MULTILINGUAL, PRICED IN SO'M)
+     */
+    const PRODUCTS = [
+      {
+        id: 'classic-burger',
+        category: 'burgers',
+        price: 32000,
+        rating: 4.9,
+        image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=80',
+        name: { uz: 'Klassik Burger', ru: 'Классический Бургер', en: 'Classic Burger' },
+        desc: {
+          uz: 'Shirador mol go‘shti kotleti, yangi pomidor, tuzlangan bodring, aysberg salati va maxsus sous.',
+          ru: 'Сочная говяжья котлета, свежие томаты, маринованные огурчики, салат айсберг и фирменный соус.',
+          en: 'Juicy 100% beef patty, fresh tomatoes, pickles, iceberg lettuce, and signature house sauce.'
+        }
+      },
+      {
+        id: 'double-cheese-burger',
+        category: 'burgers',
+        price: 44000,
+        rating: 5.0,
+        image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=700&q=80',
+        name: { uz: 'Double Chizburger', ru: 'Дабл Чизбургер', en: 'Double Cheeseburger' },
+        desc: {
+          uz: 'Ikki qavat mol go‘shti kotleti, eritilgan Cheddar pishlog‘i va qovurilgan piyoz halqalari.',
+          ru: 'Двойная говяжья котлета на гриле, двойной сыр Чеддер и хрустящие луковые кольца.',
+          en: 'Double flame-grilled beef patties, melted Cheddar cheese, and crispy onion rings.'
+        }
+      },
+      {
+        id: 'pepperoni-pizza',
+        category: 'pizzas',
+        price: 78000,
+        rating: 4.9,
+        image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=700&q=80',
+        name: { uz: 'Pepperoni Pizza (33 sm)', ru: 'Пицца Пепперони (33 см)', en: 'Pepperoni Pizza (33 cm)' },
+        desc: {
+          uz: 'Yupqa xamir, cho‘ziluvchan Motsarella pishlog‘i, halol dudlangan kolbasa va tomat sousi.',
+          ru: 'Тонкое тесто, тянущийся сыр Моцарелла, халяль пепперони и ароматный томатный соус.',
+          en: 'Thin crust, stretchy Mozzarella cheese, halal beef pepperoni, and rich tomato sauce.'
+        }
+      },
+      {
+        id: 'four-cheese-pizza',
+        category: 'pizzas',
+        price: 82000,
+        rating: 4.8,
+        image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=700&q=80',
+        name: { uz: 'To‘rt Pishloqli Pizza', ru: 'Пицца Четыре Сыра', en: 'Four Cheese Pizza' },
+        desc: {
+          uz: 'Motsarella, Cheddar, Parmezan va qaymoqli pishloqlarning betakror uyg‘unligi.',
+          ru: 'Изысканное сочетание сыров Моцарелла, Чеддер, Пармезан и сливочного сыра.',
+          en: 'A rich harmony of Mozzarella, Cheddar, Parmesan, and creamy gouda cheeses.'
+        }
+      },
+      {
+        id: 'beef-lavash',
+        category: 'lavash',
+        price: 34000,
+        rating: 4.9,
+        image: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=700&q=80',
+        name: { uz: 'Mol Go‘shtli Lavash', ru: 'Лаваш с Говядиной', en: 'Beef Lavash Wrap' },
+        desc: {
+          uz: 'Yupqa lavash xamiri ichida shirador mol go‘shti, pomidor, bodring, chipslar va sarimsoqli sous.',
+          ru: 'Сочная говядина в тонком лаваше со свежими овощами, хрустящими чипсами и чесночным соусом.',
+          en: 'Tender grilled beef wrapped in warm lavash with fresh veggies, crispy chips, and garlic sauce.'
+        }
+      },
+      {
+        id: 'cheese-lavash',
+        category: 'lavash',
+        price: 37000,
+        rating: 4.8,
+        image: 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=700&q=80',
+        name: { uz: 'Pishloqli Tovuq Lavash', ru: 'Сырный Лаваш с Курицей', en: 'Cheesy Chicken Lavash' },
+        desc: {
+          uz: 'Grilda pishgan tovuq filesi, eritilgan pishloq, yangi sabzavotlar va maxsus qaymoqli sous.',
+          ru: 'Куриное филе на гриле, расплавленный сыр, свежие овощи и нежный сливочный соус.',
+          en: 'Grilled chicken breast, melted cheese, crisp vegetables, and creamy signature sauce.'
+        }
+      },
+      {
+        id: 'royal-hotdog',
+        category: 'hotdogs',
+        price: 22000,
+        rating: 4.7,
+        image: 'https://images.unsplash.com/photo-1619740455993-9e612b1af08a?auto=format&fit=crop&w=700&q=80',
+        name: { uz: 'Qirollik Hot-Dogi', ru: 'Королевский Хот-дог', en: 'Royal Hot-Dog' },
+        desc: {
+          uz: 'Yumshoq bulochka, ikkita halol sosiska, pishloq, xantal (gorchitsa) va qovurilgan piyoz.',
+          ru: 'Мягкая булочка, две халяль сосиски, сыр, горчичный соус и хрустящий жареный лук.',
+          en: 'Soft bakery bun, double halal sausages, melted cheese, tangy mustard, and crispy onions.'
+        }
+      },
+      {
+        id: 'crispy-fries',
+        category: 'fries',
+        price: 16000,
+        rating: 4.8,
+        image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=700&q=80',
+        name: { uz: 'Kartoshka Fri (Katta)', ru: 'Картофель Фри (Большой)', en: 'French Fries (Large)' },
+        desc: {
+          uz: 'Oltin rangda qovurilgan qarsildoq kartoshka bo‘lakchalari, dengiz tuzi va tomat ketchup bilan.',
+          ru: 'Золотистый хрустящий картофель фри с морской солью и томатным кетчупом.',
+          en: 'Golden crispy potato fries seasoned with sea salt, served with rich tomato ketchup.'
+        }
+      },
+      {
+        id: 'cola-drink',
+        category: 'drinks',
+        price: 12000,
+        rating: 4.9,
+        image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=700&q=80',
+        name: { uz: 'Muzdek Cola (0.5 L)', ru: 'Ледяная Кола (0.5 л)', en: 'Ice Cold Cola (0.5 L)' },
+        desc: {
+          uz: 'Taomlaringizga ajoyib hamroh bo‘luvchi salqin gazlangan ichimlik.',
+          ru: 'Освежающий прохладный газированный напиток к вашим любимым блюдам.',
+          en: 'Refreshing chilled sparkling cola to pair with your favorite fast-food meal.'
+        }
+      }
+    ];
+
+    /**
+     * 3. APPLICATION STATE
+     */
+    let currentLang = localStorage.getItem('fastfood_lang') || 'uz';
+    let currentCategory = 'all';
+    let searchTerm = '';
+    let cart = JSON.parse(localStorage.getItem('fastfood_cart')) || [];
+
+    /**
+     * 4. HELPER: FORMAT UZBEK SOM CURRENCY (e.g., 32 000 so'm)
+     */
+    function formatSom(amount) {
+      const formattedNumber = amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+      return `${formattedNumber} ${TRANSLATIONS[currentLang].currency}`;
+    }
+
+    /**
+     * 5. LANGUAGE SWITCHING ENGINE
+     */
+    window.setLanguage = function(lang) {
+      if (!TRANSLATIONS[lang]) return;
+      currentLang = lang;
+      localStorage.setItem('fastfood_lang', lang);
+      document.documentElement.lang = lang;
+
+      const dict = TRANSLATIONS[lang];
+      document.getElementById('current-lang-flag').textContent = dict.flag;
+      document.getElementById('current-lang-code').textContent = dict.code;
+
+      // Update all elements with data-i18n attribute
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.textContent = dict[key];
+        }
+      });
+
+      // Update placeholders
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) {
+          el.placeholder = dict[key];
+        }
+      });
+
+      // Highlight active language option
+      document.querySelectorAll('.lang-option').forEach(btn => {
+        const isActive = btn.dataset.lang === lang;
+        btn.classList.toggle('bg-brandRed/10', isActive);
+        btn.classList.toggle('text-brandRed', isActive);
+      });
+
+      // Close dropdown & re-render dynamic products & cart
+      document.getElementById('lang-menu').classList.add('hidden');
+      renderProducts();
+      renderCart();
+    };
+
+    /**
+     * 6. DARK MODE / LIGHT MODE TOGGLE
+     */
+    function updateThemeIcon() {
+      const isDark = document.documentElement.classList.contains('dark');
+      const icon = document.getElementById('theme-icon');
+      icon.className = isDark ? 'fa-solid fa-sun text-base' : 'fa-solid fa-moon text-base';
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.classList.toggle('dark');
+      localStorage.setItem('fastfood_theme', isDark ? 'dark' : 'light');
+      updateThemeIcon();
+    }
+
+    /**
+     * 7. RENDER PRODUCT CARDS (FILTERED BY CATEGORY & SEARCH)
+     */
+    function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      const noResults = document.getElementById('no-results-box');
+      const dict = TRANSLATIONS[currentLang];
+
+      const filtered = PRODUCTS.filter(product => {
+        const matchesCategory = currentCategory === 'all' || product.category === currentCategory;
+        const query = searchTerm.toLowerCase().trim();
+        if (!query) return matchesCategory;
+
+        // Search across localized names & descriptions so searching works intuitively
+        const matchesQuery =
+          product.name.uz.toLowerCase().includes(query) ||
+          product.name.ru.toLowerCase().includes(query) ||
+          product.name.en.toLowerCase().includes(query) ||
+          product.desc[currentLang].toLowerCase().includes(query);
+
+        return matchesCategory && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        noResults.classList.remove('hidden');
+        return;
+      }
+
+      noResults.classList.add('hidden');
+      grid.innerHTML = filtered.map(item => `
+        <article class="product-card bg-white dark:bg-brandBlack-surface rounded-3xl overflow-hidden shadow-md hover:shadow-2xl border border-gray-100 dark:border-white/10 transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="relative h-52 overflow-hidden bg-brandBlack">
+              <img 
+                src="${item.image}" 
+                alt="${item.name[currentLang]}" 
+                loading="lazy"
+                onerror="this.src='https://placehold.co/600x450/121212/FFB703?text=${encodeURIComponent(item.name[currentLang])}'"
+                class="product-img w-full h-full object-cover transition-transform duration-500"
+              />
+              <span class="absolute top-3 right-3 bg-white/95 dark:bg-brandBlack/90 text-brandBlack dark:text-white text-xs font-extrabold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-xs">
+                <i class="fa-solid fa-star text-brandYellow"></i> ${item.rating.toFixed(1)}
+              </span>
+            </div>
+
+            <div class="p-5 pb-3">
+              <h3 class="text-lg font-extrabold text-brandBlack dark:text-white group-hover:text-brandRed transition-colors line-clamp-1">
+                ${item.name[currentLang]}
+              </h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1.5 leading-relaxed line-clamp-2">
+                ${item.desc[currentLang]}
+              </p>
+            </div>
+          </div>
+
+          <div class="p-5 pt-3 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-display text-2xl text-brandRed tracking-wide">${formatSom(item.price)}</span>
+            </div>
+
+            <button 
+              type="button"
+              onclick="addToCart('${item.id}')" 
+              class="w-full bg-brandBlack dark:bg-brandRed hover:bg-brandRed dark:hover:bg-brandRed-dark text-white font-bold py-3 px-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-xs hover:shadow-md cursor-pointer active:scale-95"
+            >
+              <i class="fa-solid fa-cart-plus text-brandYellow dark:text-white"></i>
+              <span>${dict.add_to_cart}</span>
+            </button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    /**
+     * 8. SHOPPING CART OPERATIONS
+     */
+    window.addToCart = function(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ id: productId, qty: 1 });
+      }
+
+      saveCart();
+      showToast(`<strong>${product.name[currentLang]}</strong> ${TRANSLATIONS[currentLang].added_toast}`);
+    };
+
+    window.updateCartQty = function(productId, delta) {
+      const index = cart.findIndex(item => item.id === productId);
+      if (index === -1) return;
+
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      saveCart();
+    };
+
+    window.removeFromCart = function(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      saveCart();
+    };
+
+    function saveCart() {
+      localStorage.setItem('fastfood_cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function renderCart() {
+      const dict = TRANSLATIONS[currentLang];
+      const badge = document.getElementById('cart-badge');
+      const countLabel = document.getElementById('cart-count-label');
+      const itemsList = document.getElementById('cart-items-list');
+      const subtotalEl = document.getElementById('cart-subtotal');
+      const deliveryEl = document.getElementById('cart-delivery');
+      const totalEl = document.getElementById('cart-total');
+      const checkoutBtn = document.getElementById('checkout-open-btn');
+
+      const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+      badge.textContent = totalQty;
+      countLabel.textContent = `${totalQty} ${dict.items_suffix}`;
+
+      if (cart.length === 0) {
+        itemsList.innerHTML = `
+          <div class="h-full flex flex-col items-center justify-center text-center py-12">
+            <div class="w-20 h-20 rounded-full bg-gray-100 dark:bg-white/5 text-gray-400 flex items-center justify-center text-3xl mb-4">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </div>
+            <h4 class="font-extrabold text-lg">${dict.cart_empty_title}</h4>
+            <p class="text-sm text-gray-500 dark:text-gray-400 max-w-xs mt-1">${dict.cart_empty_desc}</p>
+          </div>
+        `;
+        subtotalEl.textContent = formatSom(0);
+        deliveryEl.textContent = formatSom(0);
+        totalEl.textContent = formatSom(0);
+        checkoutBtn.disabled = true;
+        return;
+      }
+
+      checkoutBtn.disabled = false;
+      let subtotal = 0;
+
+      itemsList.innerHTML = cart.map(cartItem => {
+        const product = PRODUCTS.find(p => p.id === cartItem.id);
+        if (!product) return '';
+        const itemTotal = product.price * cartItem.qty;
+        subtotal += itemTotal;
+
+        return `
+          <div class="flex items-center gap-3.5 bg-gray-50 dark:bg-brandBlack p-3.5 rounded-2xl border border-gray-100 dark:border-white/10">
+            <img 
+              src="${product.image}" 
+              alt="${product.name[currentLang]}" 
+              onerror="this.src='https://placehold.co/120x120/121212/FFB703?text=Food'"
+              class="w-16 h-16 rounded-xl object-cover shrink-0"
+            />
+            <div class="flex-1 min-w-0">
+              <h5 class="font-bold text-sm truncate">${product.name[currentLang]}</h5>
+              <p class="text-xs font-extrabold text-brandRed mt-0.5">${formatSom(itemTotal)}</p>
+              
+              <div class="flex items-center gap-2.5 mt-2">
+                <button 
+                  type="button"
+                  onclick="updateCartQty('${product.id}', -1)" 
+                  class="w-7 h-7 rounded-lg bg-white dark:bg-brandBlack-surface border border-gray-200 dark:border-white/15 hover:bg-brandRed hover:text-white flex items-center justify-center text-xs font-bold transition-colors cursor-pointer"
+                >
+                  <i class="fa-solid fa-minus"></i>
+                </button>
+                <span class="text-xs font-extrabold w-5 text-center">${cartItem.qty}</span>
+                <button 
+                  type="button"
+                  onclick="updateCartQty('${product.id}', 1)" 
+                  class="w-7 h-7 rounded-lg bg-white dark:bg-brandBlack-surface border border-gray-200 dark:border-white/15 hover:bg-brandBlack hover:text-white flex items-center justify-center text-xs font-bold transition-colors cursor-pointer"
+                >
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+            </div>
+
+            <button 
+              type="button"
+              onclick="removeFromCart('${product.id}')" 
+              aria-label="Remove item"
+              class="text-gray-400 hover:text-brandRed p-2 transition-colors cursor-pointer"
+            >
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      const deliveryCost = subtotal >= 100000 ? 0 : 12000;
+      const grandTotal = subtotal + deliveryCost;
+
+      subtotalEl.textContent = formatSom(subtotal);
+      deliveryEl.textContent = deliveryCost === 0 ? dict.cart_free : formatSom(deliveryCost);
+      totalEl.textContent = formatSom(grandTotal);
+    }
+
+    /**
+     * 9. TOAST NOTIFICATION
+     */
+    function showToast(htmlText) {
+      const box = document.getElementById('toast-box');
+      const toast = document.createElement('div');
+      toast.className = 'bg-brandBlack text-white border-l-4 border-brandYellow px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-sm transition-all duration-300 toast-enter pointer-events-auto';
+      toast.innerHTML = `<i class="fa-solid fa-circle-check text-brandYellow text-lg"></i><span>${htmlText}</span>`;
+      box.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('toast-enter');
+        toast.classList.add('toast-show');
+      });
+
+      setTimeout(() => {
+        toast.classList.remove('toast-show');
+        toast.classList.add('toast-enter');
+        setTimeout(() => toast.remove(), 300);
+      }, 2600);
+    }
+
+    /**
+     * 10. EVENT LISTENERS & INITIALIZATION
+     */
+    function syncSearchInputs(val) {
+      searchTerm = val;
+      document.getElementById('header-search-input').value = val;
+      document.getElementById('mobile-search-input').value = val;
+      document.getElementById('menu-search-input').value = val;
+      document.getElementById('clear-search-btn').classList.toggle('hidden', val.trim().length === 0);
+      renderProducts();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+      updateThemeIcon();
+      setLanguage(currentLang);
+
+      // Theme Toggle
+      document.getElementById('theme-toggle-btn').addEventListener('click', toggleTheme);
+
+      // Language Dropdown Toggle
+      const langBtn = document.getElementById('lang-toggle-btn');
+      const langMenu = document.getElementById('lang-menu');
+      langBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        langMenu.classList.toggle('hidden');
+      });
+      document.addEventListener('click', () => langMenu.classList.add('hidden'));
+
+      // Mobile Hamburger Menu
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+
+      mobileMenuBtn.addEventListener('click', () => {
+        const isHidden = mobileMenu.classList.toggle('hidden');
+        mobileMenuIcon.className = isHidden ? 'fa-solid fa-bars' : 'fa-solid fa-xmark';
+      });
+
+      document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          mobileMenuIcon.className = 'fa-solid fa-bars';
+        });
+      });
+
+      // Category Tabs
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentCategory = btn.dataset.cat;
+          document.querySelectorAll('.cat-btn').forEach(b => {
+            b.classList.remove('bg-brandRed', 'text-white', 'shadow-md', 'shadow-brandRed/25');
+            b.classList.add('bg-white', 'dark:bg-brandBlack', 'text-brandBlack', 'dark:text-gray-200');
+          });
+          btn.classList.remove('bg-white', 'dark:bg-brandBlack', 'text-brandBlack', 'dark:text-gray-200');
+          btn.classList.add('bg-brandRed', 'text-white', 'shadow-md', 'shadow-brandRed/25');
+          renderProducts();
+        });
+      });
+
+      // Live Search Inputs & Forms (Header, Mobile, and Menu)
+      ['header-search-input', 'mobile-search-input', 'menu-search-input'].forEach(id => {
+        document.getElementById(id).addEventListener('input', (e) => syncSearchInputs(e.target.value));
+      });
+
+      ['header-search-form', 'mobile-search-form', 'menu-search-form'].forEach(formId => {
+        document.getElementById(formId).addEventListener('submit', (e) => {
+          e.preventDefault();
+          renderProducts();
+          document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+          mobileMenu.classList.add('hidden');
+          mobileMenuIcon.className = 'fa-solid fa-bars';
+        });
+      });
+
+      document.getElementById('clear-search-btn').addEventListener('click', () => syncSearchInputs(''));
+      document.getElementById('reset-menu-btn').addEventListener('click', () => {
+        syncSearchInputs('');
+        document.querySelector('.cat-btn[data-cat="all"]').click();
+      });
+
+      // Cart Drawer Open / Close / Clear
+      const cartBackdrop = document.getElementById('cart-backdrop');
+      const cartDrawer = document.getElementById('cart-drawer');
+
+      function openCart() {
+        cartBackdrop.classList.remove('hidden');
+        cartDrawer.classList.remove('translate-x-full');
+        document.body.classList.add('overflow-hidden');
+      }
+
+      function closeCart() {
+        cartBackdrop.classList.add('hidden');
+        cartDrawer.classList.add('translate-x-full');
+        document.body.classList.remove('overflow-hidden');
+      }
+
+      document.getElementById('open-cart-btn').addEventListener('click', openCart);
+      document.getElementById('close-cart-btn').addEventListener('click', closeCart);
+      cartBackdrop.addEventListener('click', closeCart);
+
+      document.getElementById('clear-cart-btn').addEventListener('click', () => {
+        cart = [];
+        saveCart();
+      });
+
+      // Checkout Modal Flow
+      const checkoutModal = document.getElementById('checkout-modal');
+      const formStep = document.getElementById('checkout-form-step');
+      const doneStep = document.getElementById('checkout-done-step');
+
+      document.getElementById('checkout-open-btn').addEventListener('click', () => {
+        closeCart();
+        document.getElementById('modal-total-text').textContent = document.getElementById('cart-total').textContent;
+        formStep.classList.remove('hidden');
+        doneStep.classList.add('hidden');
+        checkoutModal.classList.remove('hidden');
+        checkoutModal.classList.add('flex');
+      });
+
+      function closeCheckoutModal() {
+        checkoutModal.classList.add('hidden');
+        checkoutModal.classList.remove('flex');
+      }
+
+      document.getElementById('close-modal-btn').addEventListener('click', closeCheckoutModal);
+      document.getElementById('finish-order-btn').addEventListener('click', closeCheckoutModal);
+
+      document.getElementById('checkout-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        cart = [];
+        saveCart();
+        e.target.reset();
+        formStep.classList.add('hidden');
+        doneStep.classList.remove('hidden');
+      });
+
+      // Contact Form Submission
+      document.getElementById('contact-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const msg = document.getElementById('contact-success-msg');
+        msg.classList.remove('hidden');
+        e.target.reset();
+        setTimeout(() => msg.classList.add('hidden'), 5000);
+      });
+    });
+  </script>
+</body>
+</html>
